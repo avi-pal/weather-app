@@ -115,7 +115,7 @@ const Input = ({ search }) => {
           navigate("/");
         }}
       />
-      <div className="absolute top-full bg-gray-600">
+      <div className="absolute top-full bg-gray-500">
         {cities.map((city, index) => {
           return (
             <>
