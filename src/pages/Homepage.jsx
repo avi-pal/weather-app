@@ -119,7 +119,7 @@ const Input = ({ search }) => {
         {cities.map((city, index) => {
           return (
             <>
-              <h2 key={index} className="text-white font-comforta">
+              <h2 key={index} className="text-white font-comforta px-2 p-1">
                 {city.name}
               </h2>
             </>
