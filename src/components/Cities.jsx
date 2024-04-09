@@ -6,9 +6,10 @@ import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 const Cities = () => {
   const navigate = useNavigate();
 
-  if (!localStorage.getItem("offset")) localStorage.setItem("offset", 0);
+  localStorage.setItem("offset", 0);
   const [city, setCity] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isNearEnd, setIsNearEnd] = useState(false);
   const getCities = async () => {
     try {
       const rawData = await axios.get(
@@ -16,9 +17,13 @@ const Cities = () => {
           "offset"
         )}`
       );
+      localStorage.setItem(
+        "offset",
+        JSON.stringify(JSON.parse(localStorage.getItem("offset")) + 20)
+      );
       const data = rawData.data.results;
       console.log(data);
-      setCity(data);
+      setCity([...city, ...data]);
       setLoading(false);
     } catch (e) {
       alert(e.message);
@@ -26,7 +31,22 @@ const Cities = () => {
   };
   useEffect(() => {
     getCities();
-  }, [loading]);
+  }, [loading, isNearEnd]);
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, clientHeight, scrollHeight } =
+        document.documentElement;
+      const distanceToBottom = scrollHeight - (scrollTop + clientHeight);
+      const threshold = 200;
+      setIsNearEnd(distanceToBottom < threshold);
+      console.log(distanceToBottom);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <>
       {loading
@@ -46,7 +66,7 @@ const Cities = () => {
               </div>
             );
           })}
-      <div className="flex justify-center gap-5">
+      {/* <div className="flex justify-center gap-5">
         <div
           className={`${
             localStorage.getItem("offset") >= 20
@@ -77,7 +97,7 @@ const Cities = () => {
         >
           <FaArrowRightLong color="white" />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

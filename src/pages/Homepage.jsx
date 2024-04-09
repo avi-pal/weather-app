@@ -91,14 +91,17 @@ const Input = ({ search }) => {
     const data = rawData.data.results;
     sestCities(data);
   };
+  const [searchItem, setSearchItem] = useState("");
   return (
     <div className="bg-[#202B3B] rounded mt-5 p-2 relative">
       <input
         type="text"
         className="bg-transparent focus:outline-none bg-[#202B3B] rounded text-white w-4/5"
         placeholder="Search..."
+        // value={searchItem}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
+            // setSearchItem(e.target.value);
             search(e.target.value);
           }
           sestCities([]);
@@ -119,7 +122,13 @@ const Input = ({ search }) => {
         {cities.map((city, index) => {
           return (
             <>
-              <h2 key={index} className="text-white font-comforta px-2 p-1">
+              <h2
+                key={index}
+                className="text-white font-comforta px-2 p-1"
+                onClick={() => {
+                  setSearchItem(city.name);
+                }}
+              >
                 {city.name}
               </h2>
             </>
