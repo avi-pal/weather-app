@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { LiaSortSolid } from "react-icons/lia";
+import { AiOutlineEnter } from "react-icons/ai";
 
 const Cities = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Cities = () => {
   const [loading, setLoading] = useState(true);
   const [isNearEnd, setIsNearEnd] = useState(true);
   const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
   let [citySort, setCitySort] = useState("desc");
   let [countrySort, setCountrySort] = useState("desc");
   let [timeZoneSort, setTimeZoneSort] = useState("desc");
@@ -55,9 +57,34 @@ const Cities = () => {
   }, []);
   return (
     <>
+      <div className="bg-[#202B3B] rounded mt-5 p-2 relative">
+        <input
+          type="text"
+          className="bg-transparent focus:outline-none bg-[#202B3B] rounded text-white w-4/5"
+          placeholder="Search..."
+          // onKeyDown={(e) => {
+          //   if (e.key === "Enter") {
+          //     search(e.target.value);
+          //   }
+          //   sestCities([]);
+          // }}
+          onChange={(e) => {
+            // handleCity(e.target.value);
+            if (e.target.value.trim().length > 0) {
+              setCity([]);
+              localStorage.setItem("offset", 0);
+              setQuery(`&where=suggest(name%2C"${e.target.value.trim()}")`);
+            } else {
+              setCity([]);
+              setQuery("");
+            }
+          }}
+        />
+        <AiOutlineEnter className="absolute right-4 bottom-3" color="white" />
+      </div>
       <div className="grid grid-cols-3 justify-between bg-[#202B3B] rounded p-3 my-5">
         <span
-          className="text-white text-sm font-comforta flex items-center"
+          className="text-white text-sm font-comforta flex items-center cursor-pointer"
           onClick={() => {
             setCity([]);
             localStorage.setItem("offset", 0);
@@ -73,7 +100,7 @@ const Cities = () => {
           City <LiaSortSolid />
         </span>
         <span
-          className="text-white text-sm font-comforta flex items-center "
+          className="text-white text-sm font-comforta flex items-center cursor-pointer"
           onClick={() => {
             setCity([]);
             localStorage.setItem("offset", 0);
@@ -90,7 +117,7 @@ const Cities = () => {
           <LiaSortSolid />
         </span>
         <span
-          className="text-white text-sm font-comforta flex items-center justify-end"
+          className="text-white text-sm font-comforta flex items-center justify-end cursor-pointer"
           onClick={() => {
             setCity([]);
             localStorage.setItem("offset", 0);

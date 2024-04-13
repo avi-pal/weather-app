@@ -111,13 +111,6 @@ const Input = ({ search }) => {
         }}
       />
       <AiOutlineEnter className="absolute right-4 bottom-3" color="white" />
-      {/* <FaLocationCrosshairs
-        className="absolute right-9 bottom-3 cursor-pointer"
-        color="white"
-        onClick={() => {
-          navigate("/");
-        }}
-      /> */}
       <div className="absolute top-full bg-gray-500">
         {cities.map((city, index) => {
           return (
