@@ -13,6 +13,8 @@ const CurrWeather = ({ location }) => {
 
   const [name, setName] = useState("");
   const [temp, setTemp] = useState("");
+  const [minTemp, setMinTemp] = useState("");
+  const [maxTemp, setMaxTemp] = useState("");
   const [feelLike, setFeelLike] = useState("");
   const [wind, setWind] = useState("");
   const [humidity, setHumidity] = useState("");
@@ -27,8 +29,11 @@ const CurrWeather = ({ location }) => {
         )}`
       );
       const data = rawData.data;
+      console.log(data);
       setName(location);
       setTemp(data.main.temp);
+      setMinTemp(data.main.temp_min);
+      setMaxTemp(data.main.temp_max);
       setFeelLike(data.main.feels_like);
       setWind(data.wind.speed);
       setHumidity(data.main.humidity);
@@ -104,7 +109,35 @@ const CurrWeather = ({ location }) => {
           <h3 className="font-comforta text-2xl text-gray-400 mb-5">
             Conditions
           </h3>
-          <div className="flex flex-col md:flex-row justify-center md:justify-between gap-5 mb-8">
+          <div className="flex flex-col md:flex-row justify-center md:justify-between gap-5 mb-4">
+            <div>
+              <div className="flex items-center">
+                <div className="icon w-[40px]">
+                  <CiTempHigh color="grey" className="w-full h-full" />
+                </div>
+                <h3 className="text-gray-400 font-comforta text-2xl font-bold">
+                  Min Temp
+                </h3>
+              </div>
+              <div className="text-2xl text-white font-bold ps-10 font-comforta">
+                {minTemp}°
+                {localStorage.getItem("temp") === "metric" ? "C" : "F"}
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center">
+                <div className="icon w-[40px]">
+                  <CiTempHigh color="grey" className="w-full h-full" />
+                </div>
+                <h3 className="text-gray-400 font-comforta text-2xl font-bold">
+                  Max Temp
+                </h3>
+              </div>
+              <div className="text-2xl text-white font-bold ps-10 font-comforta">
+                {maxTemp}°
+                {localStorage.getItem("temp") === "metric" ? "C" : "F"}
+              </div>
+            </div>
             <div>
               <div className="flex items-center">
                 <div className="icon w-[40px]">
@@ -119,6 +152,8 @@ const CurrWeather = ({ location }) => {
                 {localStorage.getItem("temp") === "metric" ? "C" : "F"}
               </div>
             </div>
+          </div>
+          <div className="flex flex-col md:flex-row justify-center md:justify-between gap-5">
             <div>
               <div className="flex items-center">
                 <div className="icon w-[40px]">
@@ -132,8 +167,6 @@ const CurrWeather = ({ location }) => {
                 {wind}km/hr
               </div>
             </div>
-          </div>
-          <div className="flex flex-col md:flex-row justify-center md:justify-between gap-5">
             <div>
               <div className="flex items-center">
                 <div className="icon w-[40px]">

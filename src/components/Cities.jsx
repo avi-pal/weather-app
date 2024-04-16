@@ -29,10 +29,8 @@ const Cities = () => {
         JSON.stringify(JSON.parse(localStorage.getItem("offset")) + 20)
       );
       const data = rawData.data.results;
-      console.log(data);
       setCity([...city, ...data]);
       setLoading(false);
-      console.log("here");
     } catch (e) {
       alert(e.message);
     }
@@ -47,7 +45,6 @@ const Cities = () => {
       const distanceToBottom = scrollHeight - (scrollTop + clientHeight);
       const threshold = 200;
       setIsNearEnd(distanceToBottom < threshold);
-      console.log(distanceToBottom);
     };
 
     window.addEventListener("scroll", handleScroll);
